@@ -15,14 +15,15 @@
             padding: 0;
             font-family: Arial, sans-serif;
             color: #333;
-            overflow: hidden;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
 
         body {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            position: relative; /* Ensure relative positioning for z-index */
+            position: relative;
+            overflow-y: auto; /* Enable vertical scrolling */
         }
 
         #particles-js {
@@ -69,6 +70,7 @@
             z-index: 1; /* Ensure content is above particles */
             width: 100%;
             box-sizing: border-box;
+            overflow-y: auto; /* Enable vertical scrolling */
         }
 
         .boxes-container {
@@ -86,7 +88,7 @@
             flex: 1 1 calc(50% - 20px); /* Responsive layout, two boxes per row */
             min-width: 250px; /* Adjust the minimum width as needed */
             max-width: 500px; /* Adjust the maximum width as needed */
-            height: 200px; /* Adjust the height as needed */
+            height: auto; /* Adjust height to auto to fit content */
             background-color: #f8f8f8;
             border-radius: 8px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -155,6 +157,10 @@
             right: 10px;
             cursor: pointer;
             font-size: 20px;
+        }
+
+        .no-scroll {
+            overflow: hidden; /* Prevent scrolling */
         }
     </style>
 </head>
@@ -304,13 +310,17 @@
         document.getElementById('contact-btn').addEventListener('click', function() {
             const modal = document.getElementById('contact-modal');
             modal.style.display = 'flex'; // Show modal
+            document.body.classList.add('no-scroll'); // Prevent scrolling on body
             setTimeout(() => modal.classList.add('show'), 10); // Add show class with a slight delay for animation
         });
 
         document.getElementById('modal-close').addEventListener('click', function() {
             const modal = document.getElementById('contact-modal');
             modal.classList.remove('show'); // Remove show class to start fade-out
-            setTimeout(() => modal.style.display = 'none', 500); // Hide after transition ends
+            setTimeout(() => {
+                modal.style.display = 'none'; // Hide after transition ends
+                document.body.classList.remove('no-scroll'); // Re-enable scrolling
+            }, 500); // Ensure this matches the CSS transition duration
         });
 
         // Optional: Close modal when clicking outside the modal content
@@ -318,7 +328,10 @@
             if (event.target === document.getElementById('contact-modal')) {
                 const modal = document.getElementById('contact-modal');
                 modal.classList.remove('show'); // Remove show class to start fade-out
-                setTimeout(() => modal.style.display = 'none', 500); // Hide after transition ends
+                setTimeout(() => {
+                    modal.style.display = 'none'; // Hide after transition ends
+                    document.body.classList.remove('no-scroll'); // Re-enable scrolling
+                }, 500); // Ensure this matches the CSS transition duration
             }
         });
 
@@ -351,7 +364,10 @@
                     document.getElementById('contact-form').reset();
                     // Close the modal
                     document.getElementById('contact-modal').classList.remove('show');
-                    setTimeout(() => document.getElementById('contact-modal').style.display = 'none', 500);
+                    setTimeout(() => {
+                        document.getElementById('contact-modal').style.display = 'none';
+                        document.body.classList.remove('no-scroll'); // Re-enable scrolling
+                    }, 500);
                 } else {
                     alert('There was an error sending your message. Please try again.');
                 }
