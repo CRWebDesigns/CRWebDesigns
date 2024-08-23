@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CR Web Designs</title>
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative; /* Ensure relative positioning for z-index */
+        }
+
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Ensure particles are behind other content */
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2; /* Ensure header is above particles */
+            justify-content: space-between; /* Align title and button properly */
+        }
+
+        header img {
+            width: 100px; /* Adjust the width as needed */
+            height: auto;
+            margin-right: 20px; /* Space between logo and title */
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px; /* Adjusted to match the previous font size */
+            flex-grow: 1; /* Allows the title to take up available space */
+        }
+
+        .content {
+            flex: 1; /* Allows the content to grow and fill the space */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0);
+            position: relative;
+            z-index: 1; /* Ensure content is above particles */
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .boxes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .box {
+            flex: 1 1 calc(50% - 20px); /* Responsive layout, two boxes per row */
+            min-width: 250px; /* Adjust the minimum width as needed */
+            max-width: 500px; /* Adjust the maximum width as needed */
+            height: 200px; /* Adjust the height as needed */
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .box h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .box p {
+            margin: 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: auto;
+            z-index: 2; /* Ensure footer is above particles */
+        }
+
+        .modal {
+            display: none; /* Hide by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+            opacity: 0; /* Start as invisible */
+            transition: opacity 0.5s ease; /* Add fade transition */
+        }
+
+        .modal.show {
+            display: flex; /* Show modal */
+            opacity: 1; /* Fully visible */
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div> <!-- Particles container -->
+
+    <header>
+        <img src="./Logo.png" alt="CR Web Designs Logo">
+        <h1>CR Web Designs</h1>
+        <button id="contact-btn" style="background-color: #292929; color: white; padding: 10px 20px; border-radius: 4px; border: none; cursor: pointer;" onmouseover="this.style.backgroundColor='#1c1c1c';" onmouseout="this.style.backgroundColor='#292929';">Contact Us</button>
+    </header>
+
+    <div class="content">
+        <div class="boxes-container">
+            <div class="box">
+                <h3>Why Choose Us?</h3>
+                <p>We offer innovative and customized web solutions tailored to your business needs.</p>
+            </div>
+            <div class="box">
+                <h3>What Makes Us Unique?</h3>
+                <p>Our designs are unique and we focus on user experience and responsive design to ensure your site looks great on all devices.</p>
+            </div>
+            <div class="box">
+                <h3>How Do We Ensure Quality?</h3>
+                <p>We follow best practices in web development, perform rigorous testing, and incorporate client feedback throughout the development process.</p>
+            </div>
+            <div class="box">
+                <h3>What Are Our Prices?</h3>
+                <p>We offer competitive pricing with transparent quotes and packages that fit various budgets and requirements.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CR Web Designs. All rights reserved.</p>
+    </footer>
+
+    <!-- Contact Us Modal -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <span id="modal-close" class="modal-close">&times;</span>
+            <h2 class="text-lg font-bold mb-4">Contact Us</h2>
+            <form id="contact-form">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700">Name</label>
+                    <input type="text" id="name" name="name" class="w-full px-3 py-2 border rounded" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700">Email</label>
+                    <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded" required>
+                </div>
+                <div class="mb-4">
+                    <label for="message" class="block text-gray-700">Message</label>
+                    <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border rounded" required></textarea>
+                </div>
+                <button type="submit" style="background-color: #292929; color: white; padding: 10px 20px; border-radius: 4px; border: none; cursor: pointer;" onmouseover="this.style.backgroundColor='#1c1c1c';" onmouseout="this.style.backgroundColor='#292929';">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Include Particles.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#000000"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#000000",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                }
+            },
+            "retina_detect": true
+        });
+
+        // JavaScript for modal display
+        document.getElementById('contact-btn').addEventListener('click', function() {
+            const modal = document.getElementById('contact-modal');
+            modal.style.display = 'flex'; // Show modal
+            setTimeout(() => modal.classList.add('show'), 10); // Add show class with a slight delay for animation
+        });
+
+        document.getElementById('modal-close').addEventListener('click', function() {
+            const modal = document.getElementById('contact-modal');
+            modal.classList.remove('show'); // Remove show class to start fade-out
+            setTimeout(() => modal.style.display = 'none', 500); // Hide after transition ends
+        });
+
+        // Optional: Close modal when clicking outside the modal content
+        window.addEventListener('click', function(event) {
+            if (event.target === document.getElementById('contact-modal')) {
+                const modal = document.getElementById('contact-modal');
+                modal.classList.remove('show'); // Remove show class to start fade-out
+                setTimeout(() => modal.style.display = 'none', 500); // Hide after transition ends
+            }
+        });
+
+        // JavaScript for form submission
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Gather form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Create payload
+            const payload = {
+                content: `**Contact Form Submission**\n**Name:** ${name}\n**Email:** ${email}\n**Message:** ${message}`
+            };
+
+            // Send data to Discord webhook
+            fetch('https://discord.com/api/webhooks/1276676754047631423/wxU7zWWQY1NKDIyK05toC-ZZr4Cvip01Kcsp66MjCg4pndBpyuVg0MVkWG4JfO_esDDy', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Message sent successfully!');
+                    // Clear the form
+                    document.getElementById('contact-form').reset();
+                    // Close the modal
+                    document.getElementById('contact-modal').classList.remove('show');
+                    setTimeout(() => document.getElementById('contact-modal').style.display = 'none', 500);
+                } else {
+                    alert('There was an error sending your message. Please try again.');
+                }
+            })
+            .catch(error => {
+                alert('There was an error sending your message. Please try again.');
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
