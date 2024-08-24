@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CR Web Designs</title>
-
-    <!-- TailwindCSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
         html, body {
             height: 100%;
@@ -15,7 +11,7 @@
             padding: 0;
             font-family: Arial, sans-serif;
             color: #333;
-            overflow-x: hidden; /* Prevent horizontal scrolling */
+            overflow-x: hidden;
         }
 
         body {
@@ -23,7 +19,7 @@
             flex-direction: column;
             min-height: 100vh;
             position: relative;
-            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-y: auto;
         }
 
         #particles-js {
@@ -32,7 +28,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0; /* Ensure particles are behind other content */
+            z-index: 0;
         }
 
         header {
@@ -43,37 +39,66 @@
             padding: 10px 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             position: relative;
-            z-index: 2; /* Ensure header is above particles */
-            justify-content: space-between; /* Align title and button properly */
+            z-index: 2;
+            justify-content: space-between;
         }
 
         header img {
-            width: 100px; /* Adjust the width as needed */
+            width: 100px;
             height: auto;
-            margin-right: 20px; /* Space between logo and title */
+            margin-right: 20px;
         }
 
         header h1 {
             margin: 0;
-            font-size: 24px; /* Adjusted to match the previous font size */
-            flex-grow: 1; /* Allows the title to take up available space */
+            font-size: 24px;
+            flex-grow: 1;
         }
 
         .content {
-            flex: 1; /* Allows the content to grow and fill the space */
+            flex: 1;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
             background-color: rgba(255, 255, 255, 0);
             position: relative;
-            z-index: 1; /* Ensure content is above particles */
+            z-index: 1;
             width: 100%;
             box-sizing: border-box;
-            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-y: auto;
         }
 
-        .boxes-container {
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            transition: margin-top 0.5s ease;
+        }
+
+        .tab-button {
+            background: #f0f0f0;
+            color: #333;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .tab-button:hover {
+            background: #e0e0e0;
+            color: #000;
+        }
+
+        .tabs-container.pricing-active {
+            margin-top: 10px;
+        }
+
+        #questions-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
@@ -82,13 +107,19 @@
             width: 100%;
             max-width: 1200px;
             padding: 20px;
+            transition: transform 0.5s ease;
+            position: relative; /* Ensure positioning is relative to its parent */
+        }
+
+        #questions-container.pricing-active {
+            transform: translateX(-100px);
         }
 
         .box {
-            flex: 1 1 calc(50% - 20px); /* Responsive layout, two boxes per row */
-            min-width: 250px; /* Adjust the minimum width as needed */
-            max-width: 500px; /* Adjust the maximum width as needed */
-            height: auto; /* Adjust height to auto to fit content */
+            flex: 1 1 calc(50% - 20px);
+            min-width: 250px;
+            max-width: 500px;
+            height: auto;
             background-color: #f8f8f8;
             border-radius: 8px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -119,11 +150,11 @@
             text-align: center;
             padding: 10px;
             margin-top: auto;
-            z-index: 2; /* Ensure footer is above particles */
+            z-index: 2;
         }
 
         .modal {
-            display: none; /* Hide by default */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -133,13 +164,13 @@
             justify-content: center;
             align-items: center;
             z-index: 3;
-            opacity: 0; /* Start as invisible */
-            transition: opacity 0.5s ease; /* Add fade transition */
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
         .modal.show {
-            display: flex; /* Show modal */
-            opacity: 1; /* Fully visible */
+            display: flex;
+            opacity: 1;
         }
 
         .modal-content {
@@ -160,12 +191,12 @@
         }
 
         .no-scroll {
-            overflow: hidden; /* Prevent scrolling */
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
-    <div id="particles-js"></div> <!-- Particles container -->
+    <div id="particles-js"></div>
 
     <header>
         <img src="./Logo.png" alt="CR Web Designs Logo">
@@ -174,7 +205,13 @@
     </header>
 
     <div class="content">
-        <div class="boxes-container">
+        <div class="tabs-container">
+            <button class="tab-button">Pricing</button>
+            <button class="tab-button">Services</button>
+            <button class="tab-button">About us</button>
+        </div>
+
+        <div id="questions-container">
             <div class="box">
                 <h3>Why Choose Us?</h3>
                 <p>We offer innovative and customized web solutions tailored to your business needs.</p>
@@ -198,7 +235,6 @@
         <p>&copy; 2024 CR Web Designs. All rights reserved.</p>
     </footer>
 
-    <!-- Contact Us Modal -->
     <div id="contact-modal" class="modal">
         <div class="modal-content">
             <span id="modal-close" class="modal-close">&times;</span>
@@ -221,10 +257,8 @@
         </div>
     </div>
 
-    <!-- Include Particles.js library -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
-        // Particles.js configuration
         particlesJS('particles-js', {
             "particles": {
                 "number": {
@@ -242,9 +276,6 @@
                     "stroke": {
                         "width": 0,
                         "color": "#000000"
-                    },
-                    "polygon": {
-                        "nb_sides": 5
                     }
                 },
                 "opacity": {
@@ -252,7 +283,7 @@
                     "random": false,
                     "anim": {
                         "enable": false,
-                        "speed": 0.5,
+                        "speed": 1,
                         "opacity_min": 0.1,
                         "sync": false
                     }
@@ -262,7 +293,7 @@
                     "random": true,
                     "anim": {
                         "enable": false,
-                        "speed": 10,
+                        "speed": 40,
                         "size_min": 0.1,
                         "sync": false
                     }
@@ -276,7 +307,7 @@
                 },
                 "move": {
                     "enable": true,
-                    "speed": 2,
+                    "speed": 6,
                     "direction": "none",
                     "random": false,
                     "straight": false,
@@ -301,81 +332,73 @@
                         "mode": "push"
                     },
                     "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 250,
+                        "size": 0,
+                        "duration": 2,
+                        "opacity": 0,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 400,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
                 }
             },
             "retina_detect": true
         });
 
-        // JavaScript for modal display
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all tab buttons
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                
+                // Remove active class from all containers
+                document.querySelector('#questions-container').classList.remove('pricing-active');
+                document.querySelector('.tabs-container').classList.remove('pricing-active');
+
+                // Add active class to clicked button and corresponding container
+                if (this.textContent.trim() === 'Pricing') {
+                    this.classList.add('active');
+                    document.querySelector('#questions-container').classList.add('pricing-active');
+                    document.querySelector('.tabs-container').classList.add('pricing-active');
+                } else {
+                    this.classList.add('active');
+                    document.querySelector('#questions-container').classList.remove('pricing-active');
+                    document.querySelector('.tabs-container').classList.remove('pricing-active');
+                }
+            });
+        });
+
         document.getElementById('contact-btn').addEventListener('click', function() {
-            const modal = document.getElementById('contact-modal');
-            modal.style.display = 'flex'; // Show modal
-            document.body.classList.add('no-scroll'); // Prevent scrolling on body
-            setTimeout(() => modal.classList.add('show'), 10); // Add show class with a slight delay for animation
+            document.body.classList.add('no-scroll');
+            document.getElementById('contact-modal').classList.add('show');
         });
 
         document.getElementById('modal-close').addEventListener('click', function() {
-            const modal = document.getElementById('contact-modal');
-            modal.classList.remove('show'); // Remove show class to start fade-out
-            setTimeout(() => {
-                modal.style.display = 'none'; // Hide after transition ends
-                document.body.classList.remove('no-scroll'); // Re-enable scrolling
-            }, 500); // Ensure this matches the CSS transition duration
+            document.body.classList.remove('no-scroll');
+            document.getElementById('contact-modal').classList.remove('show');
         });
 
-        // Optional: Close modal when clicking outside the modal content
-        window.addEventListener('click', function(event) {
-            if (event.target === document.getElementById('contact-modal')) {
-                const modal = document.getElementById('contact-modal');
-                modal.classList.remove('show'); // Remove show class to start fade-out
-                setTimeout(() => {
-                    modal.style.display = 'none'; // Hide after transition ends
-                    document.body.classList.remove('no-scroll'); // Re-enable scrolling
-                }, 500); // Ensure this matches the CSS transition duration
-            }
-        });
-
-        // JavaScript for form submission
         document.getElementById('contact-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            // Gather form data
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-
-            // Create payload
-            const payload = {
-                content: `**Contact Form Submission**\n**Name:** ${name}\n**Email:** ${email}\n**Message:** ${message}`
-            };
-
-            // Send data to Discord webhook
-            fetch('https://discord.com/api/webhooks/1276676754047631423/wxU7zWWQY1NKDIyK05toC-ZZr4Cvip01Kcsp66MjCg4pndBpyuVg0MVkWG4JfO_esDDy', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert('Message sent successfully!');
-                    // Clear the form
-                    document.getElementById('contact-form').reset();
-                    // Close the modal
-                    document.getElementById('contact-modal').classList.remove('show');
-                    setTimeout(() => {
-                        document.getElementById('contact-modal').style.display = 'none';
-                        document.body.classList.remove('no-scroll'); // Re-enable scrolling
-                    }, 500);
-                } else {
-                    alert('There was an error sending your message. Please try again.');
-                }
-            })
-            .catch(error => {
-                alert('There was an error sending your message. Please try again.');
-                console.error('Error:', error);
-            });
+            event.preventDefault();
+            // Handle form submission logic here
+            document.body.classList.remove('no-scroll');
+            document.getElementById('contact-modal').classList.remove('show');
         });
     </script>
 </body>
