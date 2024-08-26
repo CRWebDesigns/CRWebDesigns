@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CR Web Designs</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
         html, body {
             height: 100%;
@@ -51,8 +54,10 @@
 
         header h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 2rem;
+            font-family: 'Montserrat', sans-serif;
             flex-grow: 1;
+            line-height: 1.2;
         }
 
         .content {
@@ -74,7 +79,9 @@
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
-            transition: margin-top 0.5s ease;
+            transition: margin-top 0.5s ease-in-out;
+            position: relative;
+            z-index: 1;
         }
 
         .tab-button {
@@ -94,11 +101,7 @@
             color: #000;
         }
 
-        .tabs-container.pricing-active {
-            margin-top: 10px;
-        }
-
-        #questions-container {
+        .boxes-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
@@ -107,12 +110,8 @@
             width: 100%;
             max-width: 1200px;
             padding: 20px;
-            transition: transform 0.5s ease;
-            position: relative; /* Ensure positioning is relative to its parent */
-        }
-
-        #questions-container.pricing-active {
-            transform: translateX(-100px);
+            opacity: 1;
+            transition: opacity 0.5s;
         }
 
         .box {
@@ -205,13 +204,13 @@
     </header>
 
     <div class="content">
-        <div class="tabs-container">
+        <div class="tabs-container" id="tabs-container">
             <button class="tab-button">Pricing</button>
             <button class="tab-button">Services</button>
             <button class="tab-button">About us</button>
         </div>
 
-        <div id="questions-container">
+        <div class="boxes-container" id="boxes-container">
             <div class="box">
                 <h3>Why Choose Us?</h3>
                 <p>We offer innovative and customized web solutions tailored to your business needs.</p>
@@ -276,6 +275,9 @@
                     "stroke": {
                         "width": 0,
                         "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
                     }
                 },
                 "opacity": {
@@ -293,7 +295,7 @@
                     "random": true,
                     "anim": {
                         "enable": false,
-                        "speed": 10,
+                        "speed": 40,
                         "size_min": 0.1,
                         "sync": false
                     }
@@ -341,14 +343,14 @@
                         }
                     },
                     "bubble": {
-                        "distance": 250,
-                        "size": 0,
+                        "distance": 400,
+                        "size": 40,
                         "duration": 2,
-                        "opacity": 0,
-                        "speed": 1
+                        "opacity": 8,
+                        "speed": 3
                     },
                     "repulse": {
-                        "distance": 400,
+                        "distance": 200,
                         "duration": 0.4
                     },
                     "push": {
@@ -362,43 +364,29 @@
             "retina_detect": true
         });
 
-        document.querySelectorAll('.tab-button').forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove active class from all tab buttons
-                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-                
-                // Remove active class from all containers
-                document.querySelector('#questions-container').classList.remove('pricing-active');
-                document.querySelector('.tabs-container').classList.remove('pricing-active');
-
-                // Add active class to clicked button and corresponding container
-                if (this.textContent.trim() === 'Pricing') {
-                    this.classList.add('active');
-                    document.querySelector('#questions-container').classList.add('pricing-active');
-                    document.querySelector('.tabs-container').classList.add('pricing-active');
-                } else {
-                    this.classList.add('active');
-                    document.querySelector('#questions-container').classList.remove('pricing-active');
-                    document.querySelector('.tabs-container').classList.remove('pricing-active');
-                }
-            });
-        });
-
         document.getElementById('contact-btn').addEventListener('click', function() {
-            document.body.classList.add('no-scroll');
             document.getElementById('contact-modal').classList.add('show');
+            document.body.classList.add('no-scroll');
         });
 
         document.getElementById('modal-close').addEventListener('click', function() {
-            document.body.classList.remove('no-scroll');
             document.getElementById('contact-modal').classList.remove('show');
+            document.body.classList.remove('no-scroll');
         });
 
         document.getElementById('contact-form').addEventListener('submit', function(event) {
             event.preventDefault();
-            // Handle form submission logic here
-            document.body.classList.remove('no-scroll');
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            console.log('Name:', name);
+            console.log('Email:', email);
+            console.log('Message:', message);
+
             document.getElementById('contact-modal').classList.remove('show');
+            document.body.classList.remove('no-scroll');
         });
     </script>
 </body>
