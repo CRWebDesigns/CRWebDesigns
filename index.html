@@ -75,12 +75,26 @@
             overflow-y: auto;
         }
 
+        .intro-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            z-index: 1;
+            transition: opacity 0.5s ease-in-out;
+            width: 80%;
+            opacity: 1;
+        }
+
         .tabs-container {
             display: flex;
             justify-content: center;
-            margin-bottom: 20px;
-            transition: margin-top 0.5s ease-in-out;
-            position: relative;
+            margin-bottom: 700px;
+            position: absolute;
             z-index: 1;
         }
 
@@ -101,7 +115,8 @@
             color: #000;
         }
 
-        .boxes-container {
+        .boxes-container,
+        .pricing-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
@@ -110,11 +125,12 @@
             width: 100%;
             max-width: 1200px;
             padding: 20px;
-            opacity: 1;
+            opacity: 0;
             transition: opacity 0.5s;
         }
 
-        .box {
+        .box,
+        .pricing-box {
             flex: 1 1 calc(50% - 20px);
             min-width: 250px;
             max-width: 500px;
@@ -131,13 +147,21 @@
             box-sizing: border-box;
         }
 
-        .box h3 {
+        .pricing-box {
+            flex: 1 1 calc(33% - 20px);
+            min-width: 250px;
+            max-width: 350px;
+        }
+
+        .box h3,
+        .pricing-box h3 {
             margin: 0 0 10px;
             font-size: 18px;
             color: #333;
         }
 
-        .box p {
+        .box p,
+        .pricing-box p {
             margin: 0;
             font-size: 14px;
             color: #555;
@@ -204,10 +228,50 @@
     </header>
 
     <div class="content">
+        <div class="intro-text" id="intro-text">
+            Ready to step into the future of web development?
+        </div>
+
         <div class="tabs-container" id="tabs-container">
-            <button class="tab-button">Pricing</button>
-            <button class="tab-button">Services</button>
-            <button class="tab-button">About us</button>
+            <button class="tab-button" onclick="showContent('pricing')">Pricing</button>
+            <button class="tab-button" onclick="showContent('services')">Services</button>
+            <button class="tab-button" onclick="showContent('about-us')">About us</button>
+        </div>
+
+        <div class="pricing-container" id="pricing-container">
+            <div class="pricing-box">
+                <h3>Basic</h3>
+                <p>Price Range: £250 - £400</p>
+                <p>Essential features for a small start-up or personal project.</p>
+                <ul>
+                    <li>Few pages (e.g., Home, About, Contact)</li>
+                    <li>Basic design</li>
+                    <li>Limited interactivity</li>
+                    <li>Minimal custom graphics or animations</li>
+                </ul>
+            </div>
+            <div class="pricing-box">
+                <h3>Standard</h3>
+                <p>Price Range: £400 - £600</p>
+                <p>Advanced features and additional support for growing businesses.</p>
+                <ul>
+                    <li>More pages (e.g., Services, Blog)</li>
+                    <li>Customized design with branding</li>
+                    <li>Basic animations or interactive elements</li>
+                    <li>Responsive design (mobile-friendly)</li>
+                </ul>
+            </div>
+            <div class="pricing-box">
+                <h3>Advanced</h3>
+                <p>Price Range: £700 - £1,000</p>
+                <p>Comprehensive solutions with customizations for established companies.</p>
+                <ul>
+                    <li>Multiple pages and complex layouts</li>
+                    <li>Advanced custom graphics, animations, and interactions</li>
+                    <li>Comprehensive branding and design elements</li>
+                    <li>Integration with third-party services or APIs</li>
+                </ul>
+            </div>
         </div>
 
         <div class="boxes-container" id="boxes-container">
@@ -217,7 +281,7 @@
             </div>
             <div class="box">
                 <h3>What Makes Us Unique?</h3>
-                <p>Our designs are unique and we focus on user experience and responsive design to ensure your site looks great on all devices.</p>
+                <p>Our designs are unique and we focus on user experience and mobile responsiveness.</p>
             </div>
             <div class="box">
                 <h3>How Do We Ensure Quality?</h3>
@@ -376,7 +440,6 @@
 
         document.getElementById('contact-form').addEventListener('submit', function(event) {
             event.preventDefault();
-
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const message = document.getElementById('message').value;
@@ -388,6 +451,59 @@
             document.getElementById('contact-modal').classList.remove('show');
             document.body.classList.remove('no-scroll');
         });
+
+        function showContent(tabName) {
+            const boxesContainer = document.getElementById('boxes-container');
+            const pricingContainer = document.getElementById('pricing-container');
+            const introText = document.getElementById('intro-text');
+
+            boxesContainer.style.display = 'none';
+            pricingContainer.style.display = 'none';
+            introText.style.display = 'none';
+
+            boxesContainer.offsetHeight; 
+            pricingContainer.offsetHeight; 
+            introText.offsetHeight; 
+
+            if (tabName === 'about-us' || tabName === 'services') {
+                boxesContainer.style.display = 'flex';
+                boxesContainer.style.opacity = '0';
+                setTimeout(() => {
+                    boxesContainer.style.opacity = '1';
+                }, 0);
+
+                pricingContainer.style.opacity = '0';
+                introText.style.opacity = '0';
+                setTimeout(() => {
+                    introText.style.display = 'none';
+                }, 500);
+            } else if (tabName === 'pricing') {
+                pricingContainer.style.display = 'flex';
+                pricingContainer.style.opacity = '0';
+                setTimeout(() => {
+                    pricingContainer.style.opacity = '1';
+                }, 0);
+
+                boxesContainer.style.opacity = '0';
+                introText.style.opacity = '0';
+                setTimeout(() => {
+                    introText.style.display = 'none';
+                }, 500);
+            } else {
+                introText.style.display = 'block';
+                introText.style.opacity = '0';
+                setTimeout(() => {
+                    introText.style.opacity = '1';
+                }, 0);
+
+                boxesContainer.style.opacity = '0';
+                pricingContainer.style.opacity = '0';
+                setTimeout(() => {
+                    boxesContainer.style.display = 'none';
+                    pricingContainer.style.display = 'none';
+                }, 500);
+            }
+        }
     </script>
 </body>
 </html>
