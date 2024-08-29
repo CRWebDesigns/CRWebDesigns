@@ -6,6 +6,7 @@
     <title>CR Web Designs</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
     <style>
         html, body {
@@ -16,7 +17,7 @@
             color: #333;
             overflow-x: hidden;
         }
-
+    
         body {
             display: flex;
             flex-direction: column;
@@ -24,7 +25,7 @@
             position: relative;
             overflow-y: auto;
         }
-
+    
         #particles-js {
             position: absolute;
             top: 0;
@@ -33,7 +34,7 @@
             height: 100%;
             z-index: 0;
         }
-
+    
         header {
             background-color: #333;
             color: white;
@@ -45,13 +46,13 @@
             z-index: 2;
             justify-content: space-between;
         }
-
+    
         header img {
             width: 100px;
             height: auto;
             margin-right: 20px;
         }
-
+    
         header h1 {
             margin: 0;
             font-size: 2rem;
@@ -72,9 +73,10 @@
             z-index: 1;
             width: 100%;
             box-sizing: border-box;
+            height: auto;
             overflow-y: auto;
         }
-
+    
         .intro-text {
             position: absolute;
             top: 50%;
@@ -89,7 +91,7 @@
             width: 80%;
             opacity: 1;
         }
-
+    
         .tabs-container {
             display: flex;
             justify-content: center;
@@ -97,7 +99,7 @@
             position: absolute;
             z-index: 1;
         }
-
+    
         .tab-button {
             background: #f0f0f0;
             color: #333;
@@ -109,12 +111,41 @@
             font-size: 16px;
             transition: background 0.3s, color 0.3s;
         }
-
+    
         .tab-button:hover {
             background: #e0e0e0;
             color: #000;
         }
-
+    
+        .services-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+    
+        .services-container .box {
+            flex: 1 1 calc(33% - 20px);
+            min-width: 250px;
+            max-width: 350px;
+            height: auto;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    
         .boxes-container,
         .pricing-container {
             display: flex;
@@ -128,7 +159,7 @@
             opacity: 0;
             transition: opacity 0.5s;
         }
-
+    
         .box,
         .pricing-box {
             flex: 1 1 calc(50% - 20px);
@@ -146,27 +177,27 @@
             padding: 20px;
             box-sizing: border-box;
         }
-
+    
         .pricing-box {
             flex: 1 1 calc(33% - 20px);
             min-width: 250px;
             max-width: 350px;
         }
-
+    
         .box h3,
         .pricing-box h3 {
             margin: 0 0 10px;
             font-size: 18px;
             color: #333;
         }
-
+    
         .box p,
         .pricing-box p {
             margin: 0;
             font-size: 14px;
             color: #555;
         }
-
+    
         footer {
             background-color: #333;
             color: white;
@@ -175,7 +206,7 @@
             margin-top: auto;
             z-index: 2;
         }
-
+    
         .modal {
             display: none;
             position: fixed;
@@ -190,12 +221,12 @@
             opacity: 0;
             transition: opacity 0.5s ease;
         }
-
+    
         .modal.show {
             display: flex;
             opacity: 1;
         }
-
+    
         .modal-content {
             background: white;
             padding: 20px;
@@ -204,7 +235,7 @@
             max-width: 500px;
             position: relative;
         }
-
+    
         .modal-close {
             position: absolute;
             top: 10px;
@@ -212,11 +243,9 @@
             cursor: pointer;
             font-size: 20px;
         }
-
-        .no-scroll {
-            overflow: hidden;
-        }
+    
     </style>
+    
 </head>
 <body>
     <div id="particles-js"></div>
@@ -238,6 +267,22 @@
             <button class="tab-button" onclick="showContent('about-us')">About us</button>
         </div>
 
+        <div class="services-container" id="services-container">
+            <div class="box">
+                <h3>Maintenance</h3>
+                <p>We offer comprehensive maintenance services to ensure your website remains up-to-date and functional. Our maintenance packages include regular updates, security checks, and performance monitoring to keep your site running smoothly.</p>
+            </div>
+            <div class="box">
+                <h3>Support</h3>
+                <p>Our support services provide you with assistance whenever you need it. Whether it's troubleshooting issues, answering questions, or providing guidance on how to use and manage your website, our team is here to help.</p>
+            </div>
+            <div class="box">
+                <h3>Custom Development</h3>
+                <p>Need something unique? Our custom development services allow you to tailor your website to fit your exact needs. From bespoke features to unique design elements, we can create a website that perfectly matches your vision.</p>
+            </div>
+        </div>
+        
+        
         <div class="pricing-container" id="pricing-container">
             <div class="pricing-box">
                 <h3>Basic</h3>
@@ -320,7 +365,6 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
         particlesJS('particles-js', {
             "particles": {
@@ -453,57 +497,61 @@
         });
 
         function showContent(tabName) {
-            const boxesContainer = document.getElementById('boxes-container');
-            const pricingContainer = document.getElementById('pricing-container');
-            const introText = document.getElementById('intro-text');
+        const boxesContainer = document.getElementById('boxes-container');
+        const pricingContainer = document.getElementById('pricing-container');
+        const servicesContainer = document.getElementById('services-container');
+        const introText = document.getElementById('intro-text');
 
-            boxesContainer.style.display = 'none';
-            pricingContainer.style.display = 'none';
-            introText.style.display = 'none';
+        boxesContainer.style.display = 'none';
+        pricingContainer.style.display = 'none';
+        servicesContainer.style.display = 'none';
+        introText.style.display = 'none';
 
-            boxesContainer.offsetHeight; 
-            pricingContainer.offsetHeight; 
-            introText.offsetHeight; 
+        boxesContainer.offsetHeight; 
+        pricingContainer.offsetHeight; 
+        servicesContainer.offsetHeight; 
+        introText.offsetHeight; 
 
-            if (tabName === 'about-us' || tabName === 'services') {
-                boxesContainer.style.display = 'flex';
-                boxesContainer.style.opacity = '0';
-                setTimeout(() => {
-                    boxesContainer.style.opacity = '1';
-                }, 0);
+        if (tabName === 'about-us') {
+            boxesContainer.style.display = 'flex';
+            boxesContainer.style.opacity = '0';
+            setTimeout(() => {
+                boxesContainer.style.opacity = '1';
+            }, 0);
 
-                pricingContainer.style.opacity = '0';
-                introText.style.opacity = '0';
-                setTimeout(() => {
-                    introText.style.display = 'none';
-                }, 500);
-            } else if (tabName === 'pricing') {
-                pricingContainer.style.display = 'flex';
-                pricingContainer.style.opacity = '0';
-                setTimeout(() => {
-                    pricingContainer.style.opacity = '1';
-                }, 0);
+            pricingContainer.style.opacity = '0';
+            introText.style.opacity = '0';
+            setTimeout(() => {
+                introText.style.display = 'none';
+            }, 500);
+        } else if (tabName === 'pricing') {
+            pricingContainer.style.display = 'flex';
+            pricingContainer.style.opacity = '0';
+            setTimeout(() => {
+                pricingContainer.style.opacity = '1';
+            }, 0);
 
-                boxesContainer.style.opacity = '0';
-                introText.style.opacity = '0';
-                setTimeout(() => {
-                    introText.style.display = 'none';
-                }, 500);
-            } else {
-                introText.style.display = 'block';
-                introText.style.opacity = '0';
-                setTimeout(() => {
-                    introText.style.opacity = '1';
-                }, 0);
+            boxesContainer.style.opacity = '0';
+            introText.style.opacity = '0';
+            setTimeout(() => {
+                introText.style.display = 'none';
+            }, 500);
+        } else if (tabName === 'services') {
+            servicesContainer.style.display = 'flex';
+            servicesContainer.style.opacity = '0';
+            setTimeout(() => {
+                servicesContainer.style.opacity = '1';
+            }, 0);
 
-                boxesContainer.style.opacity = '0';
-                pricingContainer.style.opacity = '0';
-                setTimeout(() => {
-                    boxesContainer.style.display = 'none';
-                    pricingContainer.style.display = 'none';
-                }, 500);
-            }
+            pricingContainer.style.opacity = '0';
+            boxesContainer.style.opacity = '0';
+            introText.style.opacity = '0';
+            setTimeout(() => {
+                introText.style.display = 'none';
+            }, 500);
         }
+    }
+
     </script>
 </body>
 </html>
